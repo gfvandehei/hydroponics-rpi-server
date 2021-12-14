@@ -2,6 +2,7 @@ from threading import Thread
 from typing import List
 from hydroserver.controllers.dht_manager import DHTManager
 import time
+import datetime
 from libraries.hydroserver_redis.dht_interface import HydroDHTRedisInterface
 
 class TimedDHTLogController(Thread):
@@ -20,12 +21,14 @@ class TimedDHTLogController(Thread):
     def tick(self):
         """perform a dump of all the data to redis
         """
+        timestamp = datetime.datetime.now().isoformat()
         for sensor in self.sensor_manager._dht_sensors.values():
             temperature, humidity = sensor.get_values()
             self.dht_log.store_dht_sensor_data(
                 sensor.database_object.system_id, 
                 sensor.database_object.id,
                 temperature,
-                humidity
+                humidity,
+                timestamp=timestamp
             )
             
