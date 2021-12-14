@@ -68,7 +68,9 @@ class HydroponicsServer(Thread):
         )
         print("/dht")
         self.flask_app.register_blueprint(
-            create_dht_blueprint(self.dht_controller),
+            create_dht_blueprint(
+                self.dht_controller,
+                self.redis_dht_interface),
             url_prefix="/dht"
         )
         self.flask_app.register_blueprint(
