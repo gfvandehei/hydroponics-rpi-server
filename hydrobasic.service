@@ -1,0 +1,15 @@
+[Unit]
+Description=ROT13 demo service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=pi
+WorkingDirectory=/home/pi/projects/hydroponics-rpi-server
+ExecStart=/home/pi/.pyenv/versions/hydroponics/bin/python /home/pi/projects/hydroponics-rpi-server/bin/app.py
+
+[Install]
+WantedBy=multi-user.target
